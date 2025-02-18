@@ -5,6 +5,7 @@ import (
 	"io"
 	"log"
 	"net/http"
+	"url-shortener/storage"
 	"url-shortener/util"
 )
 
@@ -39,6 +40,9 @@ func HandleShorten(w http.ResponseWriter, r *http.Request) {
 	// Генерируем короткий ID
 	shortID := util.GenerateShortID()
 	shortURL := "http://localhost:8000/" + shortID
+
+	//сохраняем
+	storage.SaveURL(shortID, u.URL)
 
 	// Отправляем JSON-ответ
 	w.Header().Set("Content-Type", "application/json")
